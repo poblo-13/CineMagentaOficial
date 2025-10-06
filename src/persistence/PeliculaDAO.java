@@ -3,7 +3,7 @@ package persistence;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import util.ConexionBD; // Asegúrate de tener esta clase implementada
+import util.ConexionBD;
 import model.Pelicula;
 
 public class PeliculaDAO {
@@ -30,7 +30,7 @@ public class PeliculaDAO {
         }
 
         if (genero != null && !genero.trim().isEmpty()) {
-            sql.append(" AND LOWER(genero) = LOWER(?)"); // Búsqueda exacta de género
+            sql.append(" AND LOWER(genero) = LOWER(?)"); 
             params.add(genero.trim());
         }
 
@@ -80,7 +80,6 @@ public class PeliculaDAO {
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) return false;
 
-            // Recuperación del ID generado
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     pelicula.setId(generatedKeys.getInt(1)); 

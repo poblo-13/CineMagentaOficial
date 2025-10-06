@@ -11,17 +11,17 @@ import java.time.Year;
 
 public class VentanaPrincipal extends JFrame {
 
-    // Componentes del Formulario CRUD
+    // CRUD
     private JTextField txtId, txtTitulo, txtDirector;
     private JSpinner spnAnio, spnDuracion;    
     private JComboBox<String> cmbGenero;        
     private JButton btnAgregar, btnModificar, btnEliminar, btnListar, btnLimpiar;
     
-    // Componentes de la Tabla
+    // componentes tabla
     private JTable tablaPeliculas;
     private DefaultTableModel modeloTabla;
     
-    // Componentes de los Filtros (Actualizados: JTextField de título, JComboBox y JSpinner para género/años)
+    // componentes de los filtros
     private JTextField txtBusquedaTitulo; 
     private JComboBox<String> cmbBusquedaGenero; 
     private JSpinner spnBusquedaAnioMin; 
@@ -31,7 +31,7 @@ public class VentanaPrincipal extends JFrame {
     private static final String CUALQUIERA = "Cualquiera";
     private static final String[] GENEROS_CRUD = {"Acción", "Comedia", "Drama", "Sci-Fi", "Terror", "Aventura", "Musical"};
     
-    // Array para el filtro de género, incluyendo la opción "Cualquiera"
+    // array para el filtro de genero incluyendo cualquiera
     private static final String[] GENEROS_FILTRO;
     static {
         GENEROS_FILTRO = new String[GENEROS_CRUD.length + 1];
@@ -50,25 +50,25 @@ public class VentanaPrincipal extends JFrame {
     private void inicializarComponentes() {
         setLayout(new BorderLayout(10, 10));
         
-        // --- PANEL CRUD (Arriba) ---
+        // panel CRUD
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBorder(BorderFactory.createTitledBorder("Datos de la Película (CRUD)"));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Fila 0
+        // fila 0
         gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.EAST; panelFormulario.add(new JLabel("ID:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.3; txtId = new JTextField(10); txtId.setEditable(false); panelFormulario.add(txtId, gbc);
         gbc.gridx = 2; gbc.gridy = 0; gbc.anchor = GridBagConstraints.EAST; gbc.weightx = 0.0; panelFormulario.add(new JLabel("Título:"), gbc);
         gbc.gridx = 3; gbc.gridy = 0; gbc.weightx = 0.7; txtTitulo = new JTextField(20); panelFormulario.add(txtTitulo, gbc);
 
-        // Fila 1
+        // fila 1
         gbc.gridx = 0; gbc.gridy = 1; gbc.anchor = GridBagConstraints.EAST; gbc.weightx = 0.0; panelFormulario.add(new JLabel("Director:"), gbc);
         gbc.gridx = 1; gbc.gridy = 1; gbc.gridwidth = 3; gbc.weightx = 1.0; txtDirector = new JTextField(20); panelFormulario.add(txtDirector, gbc); 
         gbc.gridwidth = 1;
 
-        // Fila 2
+        // fila 2
         int anioActual = Year.now().getValue();
         gbc.gridx = 0; gbc.gridy = 2; gbc.anchor = GridBagConstraints.EAST; gbc.weightx = 0.0; panelFormulario.add(new JLabel("Año:"), gbc);
         gbc.gridx = 1; gbc.gridy = 2; gbc.weightx = 0.3;    
@@ -80,7 +80,7 @@ public class VentanaPrincipal extends JFrame {
         spnDuracion = new JSpinner(new SpinnerNumberModel(90, 1, 400, 1)); 
         panelFormulario.add(spnDuracion, gbc);
 
-        // Fila 3 y Botones CRUD
+        // fila 3 y botones CRUD
         gbc.gridx = 0; gbc.gridy = 3; gbc.anchor = GridBagConstraints.EAST; gbc.weightx = 0.0; panelFormulario.add(new JLabel("Género:"), gbc);
         gbc.gridx = 1; gbc.gridy = 3; gbc.weightx = 0.3;    
         cmbGenero = new JComboBox<>(GENEROS_CRUD);
@@ -103,7 +103,7 @@ public class VentanaPrincipal extends JFrame {
 
         add(panelFormulario, BorderLayout.NORTH);
 
-        // --- PANEL CENTRAL (Tabla y Filtros) ---
+        // panel central tabla y filtros
         JPanel panelCentral = new JPanel(new BorderLayout(5, 5));
 
         JPanel panelFiltros = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -130,7 +130,7 @@ public class VentanaPrincipal extends JFrame {
         
         panelCentral.add(panelFiltros, BorderLayout.NORTH);
 
-        // Tabla
+        // tabla
         String[] columnas = {"ID", "Título", "Director", "Año", "Duración", "Género"};
         
         modeloTabla = new DefaultTableModel(columnas, 0) {
@@ -146,7 +146,7 @@ public class VentanaPrincipal extends JFrame {
 
         add(panelCentral, BorderLayout.CENTER);
 
-        // MouseListener (para cargar datos al formulario)
+        // MouseListener para cargar datos al formulario
         tablaPeliculas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int viewRow = tablaPeliculas.getSelectedRow();
@@ -165,7 +165,7 @@ public class VentanaPrincipal extends JFrame {
         });
     }
 
-    // Métodos utilitarios
+    // metodos utilitarios
     public void limpiarCampos() {
         txtId.setText("");
         txtTitulo.setText("");
@@ -175,7 +175,7 @@ public class VentanaPrincipal extends JFrame {
         spnDuracion.setValue(90);    
         cmbGenero.setSelectedIndex(0);
 
-        // Limpiar filtros y dejarlos en estado inicial
+        // limpiar filtros y dejarlos en estado inicial
         txtBusquedaTitulo.setText("");
         cmbBusquedaGenero.setSelectedIndex(0); 
         spnBusquedaAnioMin.setValue(0);
@@ -193,9 +193,9 @@ public class VentanaPrincipal extends JFrame {
         }
     }
 
-    // --- Getters públicos para el controlador ---
+    // getters publicos para el controlador
     
-    // Filtros
+    // filtros
     public JTextField getTxtBusquedaTitulo() { return txtBusquedaTitulo; }
     public JComboBox<String> getCmbBusquedaGenero() { return cmbBusquedaGenero; }
     public JSpinner getSpnBusquedaAnioMin() { return spnBusquedaAnioMin; }

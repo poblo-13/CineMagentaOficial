@@ -3,7 +3,7 @@ package controller;
 import view.VentanaPrincipal;
 import persistence.PeliculaDAO;
 import model.Pelicula;
-import util.UIMessages; // Asegúrate de tener esta clase implementada
+import util.UIMessages;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -53,16 +53,16 @@ public class CineController implements ActionListener {
         String titulo = view.getTxtBusquedaTitulo().getText();
         String genero = (String) view.getCmbBusquedaGenero().getSelectedItem();
         
-        // Uso de JSpinner: obtenemos directamente enteros
+        // uso de jspinner obtenemos enteros
         int anioMin = (int) view.getSpnBusquedaAnioMin().getValue();
         int anioMax = (int) view.getSpnBusquedaAnioMax().getValue();
         
-        // No filtrar si el género es "Cualquiera"
+        // no filtrar si el genero es cualquiera
         if (genero != null && genero.equals("Cualquiera")) {
             genero = "";
         }
         
-        // Validación de rango de años 
+        // validacion rango de años 
         if (anioMin > 0 && anioMax > 0 && anioMin > anioMax) {
              UIMessages.mostrarMensaje(view, "El año mínimo no puede ser mayor que el año máximo.", "Error de Rango", JOptionPane.WARNING_MESSAGE);
              return;
@@ -80,7 +80,7 @@ public class CineController implements ActionListener {
         Pelicula pelicula = obtenerPeliculaDesdeFormulario();
         if (pelicula == null) return;
         
-        // MEJORA: Validación de Duplicados Rápida (Título y Año)
+        // validacion de duplicados titulo y año
         List<Pelicula> duplicados = dao.buscarPeliculas(pelicula.getTitulo(), "", pelicula.getAnio(), pelicula.getAnio());
         if (!duplicados.isEmpty()) {
             UIMessages.mostrarMensaje(view, "Ya existe una película con el título y año especificados.", "Error de Duplicado", JOptionPane.WARNING_MESSAGE);
@@ -109,7 +109,7 @@ public class CineController implements ActionListener {
         Pelicula pelicula = obtenerPeliculaDesdeFormulario();
         if (pelicula == null) return;
         
-        // Manejo de excepciones separadas (compatible con Java < 7)
+        // manejo de excepciones separadas
         try {
             int id = Integer.parseInt(idStr);
             pelicula.setId(id);

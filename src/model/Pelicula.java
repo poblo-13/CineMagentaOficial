@@ -10,8 +10,6 @@ public class Pelicula {
     private int duracion;
     private String genero;
     
-    // --- Métodos de Validación Atómica ---
-    
     private void validarTitulo(String titulo) {
         if (titulo == null || titulo.trim().isEmpty()) {
             throw new IllegalArgumentException("El Título de la película no puede estar vacío.");
@@ -49,7 +47,7 @@ public class Pelicula {
         }
     }
 
-    // --- Constructores ---
+    // constructores
     
     public Pelicula(int id, String titulo, String director, int anio, int duracion, String genero) {
         setId(id);
@@ -64,7 +62,7 @@ public class Pelicula {
         this(0, titulo, director, anio, duracion, genero);
     }
 
-    // --- Getters ---
+    // getters
     public int getId() { return id; }
     public String getTitulo() { return titulo; }
     public String getDirector() { return director; }
@@ -72,7 +70,7 @@ public class Pelicula {
     public int getDuracion() { return duracion; }
     public String getGenero() { return genero; }
 
-    // --- Setters (Ahora seguros y atómicos) ---
+    // setters 
     public void setId(int id) { 
         if (id < 0) throw new IllegalArgumentException("El ID de la película no puede ser negativo.");
         this.id = id; 
